@@ -1,23 +1,150 @@
 aid: bespoken-spirits
 name: Bespoken Spirits
-description: 'Bespoken Spirits is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: 'Bespoken Spirits is a Lexington, Kentucky beverage-alcohol technology
+  company that uses a patented, data-driven precision maturation process — micro staves
+  plus machine learning over tasting-panel data — to finish whiskey, bourbon and other
+  spirits in days rather than years, and to produce custom private-label and one-of-one
+  barrel expressions for brands, distillers and retailers. Its public technical surface
+  is not a developer program but an agentic-commerce one: the bespokenspirits.com storefront
+  runs on Shopify and publishes an llms.txt, an agents.md, a Universal Commerce Protocol
+  (UCP) discovery document at /.well-known/ucp, and two anonymous, live MCP endpoints
+  that expose catalog search, cart, checkout and order tools to AI shopping agents.'
+image: https://bespokenspirits.com/cdn/shop/files/HERO_IMAGE_0808cb9f-0b04-48f3-851a-6f6bd2307ad4.png?v=1749075439
 url: https://raw.githubusercontent.com/api-evangelist/bespoken-spirits/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-07'
 modified: '2026-08-07'
 tags:
 - Company
-apis: []
+- Spirits
+- Beverage Alcohol
+- Ecommerce
+- Agentic Commerce
+- Universal Commerce Protocol
+- Model Context Protocol
+- Shopify
+- Retail
+- Manufacturing
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- name: Bespoken Spirits UCP Commerce MCP
+  description: 'The Universal Commerce Protocol (UCP) shopping service for the Bespoken
+    Spirits storefront, exposed over MCP as a JSON-RPC 2.0 endpoint. An anonymous
+    tools/list returns 13 tools covering catalog search and lookup, cart lifecycle,
+    checkout lifecycle and order retrieval. Every tools/call requires a UCP agent
+    profile URI in meta.ucp-agent.profile, and complete_checkout additionally requires
+    a meta.idempotency-key. Payment always requires contemporaneous buyer approval.'
+  humanURL: https://bespokenspirits.com/agents.md
+  baseURL: https://bespokenspirits.com/api/ucp/mcp
+  tags:
+  - Agentic Commerce
+  - MCP
+  - Universal Commerce Protocol
+  - Checkout
+  - Catalog
+  properties:
+  - type: MCPServer
+    url: mcp/bespoken-spirits-mcp.yml
+  - type: Documentation
+    url: https://bespokenspirits.com/agents.md
+- name: Bespoken Spirits Storefront MCP
+  description: 'The Shopify storefront-renderer MCP endpoint for bespokenspirits.com.
+    An anonymous tools/list returns 5 tools — search_catalog, get_cart, update_cart,
+    search_shop_policies_and_faqs and get_product_details — a narrower, read-and-cart
+    surface than the UCP endpoint, with no checkout or order tools.'
+  humanURL: https://bespokenspirits.com/agents.md
+  baseURL: https://bespokenspirits.com/api/mcp
+  tags:
+  - Agentic Commerce
+  - MCP
+  - Catalog
+  - Shopify
+  properties:
+  - type: MCPServer
+    url: mcp/bespoken-spirits-mcp.yml
+- name: Bespoken Spirits Storefront Catalog JSON
+  description: 'The public, unauthenticated Shopify storefront product JSON surface
+    documented in the store''s own llms.txt and agents.md: /products.json for the
+    catalog (30 by default, 47 with ?limit=250 at probe time), /products/{handle}.json for a single
+    product, and /collections/{handle}/products.json for a collection. Read-only,
+    no key required.'
+  humanURL: https://bespokenspirits.com/llms.txt
+  baseURL: https://bespokenspirits.com/products.json
+  tags:
+  - Catalog
+  - Ecommerce
+  - Products
+  properties:
+  - type: Documentation
+    url: https://bespokenspirits.com/llms.txt
 common:
 - type: Website
-  url: https://www.nasdaqprivatemarket.com/
+  url: https://bespokenspirits.com/
+- type: Documentation
+  url: https://bespokenspirits.com/agents.md
+- type: LLMsTxt
+  url: llms/bespoken-spirits-llms.txt
+- type: MCPServer
+  url: mcp/bespoken-spirits-mcp.yml
+- type: WellKnown
+  url: well-known/bespoken-spirits-well-known.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Authentication
+  url: authentication/bespoken-spirits-authentication.yml
+- type: OAuthScopes
+  url: scopes/bespoken-spirits-scopes.yml
+- type: Conventions
+  url: conventions/bespoken-spirits-conventions.yml
+- type: Idempotency
+  url: conventions/bespoken-spirits-conventions.yml
+- type: ErrorCatalog
+  url: errors/bespoken-spirits-problem-types.yml
+- type: Conformance
+  url: conformance/bespoken-spirits-conformance.yml
+- type: Lifecycle
+  url: lifecycle/bespoken-spirits-lifecycle.yml
+- type: DataModel
+  url: data-model/bespoken-spirits-data-model.yml
+- type: AgenticAccess
+  url: agentic-access/bespoken-spirits-agentic-access.yml
+- type: Examples
+  url: examples/bespoken-spirits-products-sample.json
+- type: DomainSecurity
+  url: security/bespoken-spirits-domain-security.yml
+- type: Blog
+  url: https://bespokenspirits.com/blogs/news
+- type: BlogRSS
+  url: https://bespokenspirits.com/blogs/news.atom
+- type: Support
+  url: https://bespokenspirits.com/pages/contact
+- type: Pricing
+  url: https://bespokenspirits.com/collections/all
+- type: TermsOfService
+  url: https://bespokenspirits.com/policies/terms-of-service
+- type: PrivacyPolicy
+  url: https://bespokenspirits.com/policies/privacy-policy
+- type: RefundPolicy
+  url: https://bespokenspirits.com/policies/refund-policy
+- type: ShippingPolicy
+  url: https://bespokenspirits.com/policies/shipping-policy
+- type: Sitemap
+  url: https://bespokenspirits.com/sitemap.xml
+- type: About
+  url: https://bespokenspirits.com/pages/our-story
+- type: Press
+  url: https://bespokenspirits.com/pages/in-the-news
+- type: LinkedIn
+  url: https://www.linkedin.com/company/bespoken-spirits-inc
+x-enrichment:
+  date: '2026-08-07'
+  status: enriched
+  artifacts_added: 23
+  pass: local-v1
+
