@@ -1,0 +1,114 @@
+{
+  "products": [
+    {
+      "id": 10127733686512,
+      "title": "Coaches for the Kids",
+      "handle": "coaches-for-the-kids",
+      "body_html": "<p>Coaches for the Kids</p>",
+      "published_at": "2026-07-27T10:09:26-04:00",
+      "created_at": "2026-07-27T10:09:25-04:00",
+      "updated_at": "2026-08-07T06:11:19-04:00",
+      "vendor": "Bespoken Spirits",
+      "product_type": "",
+      "tags": [],
+      "variants": [
+        {
+          "id": 50101426979056,
+          "title": "Default Title",
+          "option1": "Default Title",
+          "option2": null,
+          "option3": null,
+          "sku": null,
+          "requires_shipping": true,
+          "taxable": true,
+          "featured_image": null,
+          "available": true,
+          "price": "149.99",
+          "grams": 0,
+          "compare_at_price": null,
+          "position": 1,
+          "product_id": 10127733686512,
+          "created_at": "2026-07-27T10:09:25-04:00",
+          "updated_at": "2026-08-07T06:11:19-04:00"
+        }
+      ],
+      "images": [
+        {
+          "id": 54348644876528,
+          "created_at": "2026-07-27T10:08:24-04:00",
+          "position": 1,
+          "updated_at": "2026-07-27T10:08:26-04:00",
+          "product_id": 10127733686512,
+          "variant_ids": [],
+          "src": "https://cdn.shopify.com/s/files/1/0756/8139/9024/files/CoachesfortheKids-6.jpg?v=1785161306",
+          "width": 3703,
+          "height": 5555
+        }
+      ],
+      "options": [
+        {
+          "name": "Title",
+          "position": 1,
+          "values": [
+            "Default Title"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10090338582768,
+      "title": "K-Club Varsity Reserve",
+      "handle": "k-club-varsity-reserve",
+      "body_html": "<div id=\"product-component-1783529036393\"></div>\n<script type=\"text/javascript\">\n/*<![CDATA[*/\n(function () {\n  var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';\n  if (window.ShopifyBuy) {\n    if (window.ShopifyBuy.UI) {\n      ShopifyBuyInit();\n    } else {\n      loadScript();\n    }\n  } else {\n    loadScript();\n  }\n  function loadScript() {\n    var script = document.createElement('script');\n    script.async = true;\n    script.src = scriptURL;\n    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(script);\n    script.onload = ShopifyBuyInit;\n  }\n  function ShopifyBuyInit() {\n    var client = ShopifyBuy.buildClient({\n      domain: 'kentucky-bourbontrail.myshopify.com',\n      storefrontAccessToken: '1fd1bda682861b3dee95bf274a3bc18f',\n    });\n    ShopifyBuy.UI.onReady(client).then(function (ui) {\n      ui.createComponent('product', {\n        id: '10090338582768',\n        node: document.getElementById('product-component-1783529036393'),\n        moneyFormat: '%24%7B%7Bamount%7D%7D',\n        options: {\n  \"product\": {\n    \"styles\": {\n      \"product\": {\n        \"@media (min-width: 601px)\": {\n          \"max-width\": \"calc(25% - 20px)\",\n          \"margin-left\": \"20px\",\n          \"margin-bottom\": \"50px\"\n        }\n      },\n      \"button\": {\n        \"font-size\": \"18px\",\n        \"padding-top\": \"17px\",\n        \"padding-bottom\": \"17px\",\n        \":hover\": {\n          \"background-color\": \"#285256\"\n        },\n        \"background-color\": \"#2c5b5f\",\n        \":focus\": {\n          \"background-color\": \"#285256\"\n        },\n        \"border-radius\": \"8px\",\n        \"padding-left\": \"59px\",\n        \"padding-right\": \"59px\"\n      },\n      \"quantityInput\": {\n        \"font-size\": \"18px\",\n        \"padding-top\": \"17px\",\n        \"padding-bottom\": \"17px\"\n      }\n    },\n    \"contents\": {\n      \"img\": false,\n      \"title\": false,\n      \"price\": false\n    },\n    \"text\": {\n      \"button\": \"BUY NOW\"\n    }\n  },\n  \"productSet\": {\n    \"styles\": {\n      \"products\": {\n        \"@media (min-width: 601px)\": {\n          \"margin-left\": \"-20px\"\n        }\n      }\n    }\n  },\n  \"modalProduct\": {\n    \"contents\": {\n      \"img\": false,\n      \"imgWithCarousel\": true,\n      \"button\": false,\n      \"buttonWithQuantity\": true\n    },\n    \"styles\": {\n      \"product\": {\n        \"@media (min-width: 601px)\": {\n          \"max-width\": \"100%\",\n          \"margin-left\": \"0px\",\n          \"margin-bottom\": \"0px\"\n        }\n      },\n      \"button\": {\n        \"font-size\": \"18px\",\n        \"padding-top\": \"17px\",\n        \"padding-bottom\": \"17px\",\n        \":hover\": {\n          \"background-color\": \"#285256\"\n        },\n        \"background-color\": \"#2c5b5f\",\n        \":focus\": {\n          \"background-color\": \"#285256\"\n        },\n        \"border-radius\": \"8px\",\n        \"padding-left\": \"59px\",\n        \"padding-right\": \"59px\"\n      },\n      \"quantityInput\": {\n        \"font-size\": \"18px\",\n        \"padding-top\": \"17px\",\n        \"padding-bottom\": \"17px\"\n      }\n    },\n    \"text\": {\n      \"button\": \"Add to cart\"\n    }\n  },\n  \"option\": {},\n  \"cart\": {\n    \"styles\": {\n      \"button\": {\n        \"font-size\": \"18px\",\n        \"padding-top\": \"17px\",\n        \"padding-bottom\": \"17px\",\n        \":hover\": {\n          \"background-color\": \"#285256\"\n        },\n        \"background-color\": \"#2c5b5f\",\n        \":focus\": {\n          \"background-color\": \"#285256\"\n        },\n        \"border-radius\": \"8px\"\n      }\n    },\n    \"text\": {\n      \"total\": \"Subtotal\"\n    },\n    \"popup\": false\n  },\n  \"toggle\": {\n    \"styles\": {\n      \"toggle\": {\n        \"background-color\": \"#2c5b5f\",\n        \":hover\": {\n          \"background-color\": \"#285256\"\n        },\n        \":focus\": {\n          \"background-color\": \"#285256\"\n        }\n      },\n      \"count\": {\n        \"font-size\": \"18px\"\n      }\n    }\n  }\n},\n      });\n    });\n  }\n})();\n/*]]>*/\n</script><p>Founded in 1961 by Kentucky lettermen Frank Seale and Robert Montgomery, the K Club was created to unite Wildcats beyond the game.</p>\n<p>Built on fellowship, tradition, and service, it has long honored the legacy of former athletes.</p>\n<p>Today, the K Club supports letter winners as they live their purpose beyond athletics through fellowship, networking, philanthropic support, and personal and professional development resources.</p>\n<p>This private selection honors that enduring Wildcat legacy.</p>\n<p style=\"text-align: center;\"><strong>108 PROOF | 750 ML | 54% ALC/VOL</strong></p>",
+      "published_at": "2026-07-08T12:43:37-04:00",
+      "created_at": "2026-07-08T12:43:36-04:00",
+      "updated_at": "2026-08-07T06:11:19-04:00",
+      "vendor": "Bespoken Spirits",
+      "product_type": "",
+      "tags": [],
+      "variants": [
+        {
+          "id": 49992218771696,
+          "title": "Default Title",
+          "option1": "Default Title",
+          "option2": null,
+          "option3": null,
+          "sku": null,
+          "requires_shipping": true,
+          "taxable": true,
+          "featured_image": null,
+          "available": true,
+          "price": "99.99",
+          "grams": 0,
+          "compare_at_price": null,
+          "position": 1,
+          "product_id": 10090338582768,
+          "created_at": "2026-07-08T12:43:36-04:00",
+          "updated_at": "2026-08-07T06:11:19-04:00"
+        }
+      ],
+      "images": [
+        {
+          "id": 54110436262128,
+          "created_at": "2026-07-08T12:41:09-04:00",
+          "position": 1,
+          "updated_at": "2026-07-08T12:41:10-04:00",
+          "product_id": 10090338582768,
+          "variant_ids": [],
+          "src": "https://cdn.shopify.com/s/files/1/0756/8139/9024/files/kclubrender.jpg?v=1783528870",
+          "width": 600,
+          "height": 1200
+        }
+      ],
+      "options": [
+        {
+          "name": "Title",
+          "position": 1,
+          "values": [
+            "Default Title"
+          ]
+        }
+      ]
+    }
+  ]
+}

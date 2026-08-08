@@ -1,0 +1,17 @@
+generated: '2026-08-07'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: bespokenspirits.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Sep 11 04:16:35 2026 GMT
+  hsts: true
+  hsts_max_age: 7889238
+domains:
+- domain: bespokenspirits.com
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: reject

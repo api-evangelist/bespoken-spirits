@@ -1,0 +1,132 @@
+generated: '2026-08-07'
+method: searched
+source: https://bespokenspirits.com/agents.md
+derived_from:
+- mcp/bespoken-spirits-ucp-mcp-tools.json
+- well-known/bespoken-spirits-ucp.json
+- https://bespokenspirits.com/robots.txt
+notes: >-
+  Bespoken Spirits has no REST developer program, so the cross-cutting semantics here
+  are those of the Universal Commerce Protocol shopping service it exposes over MCP,
+  plus the anonymous Shopify storefront JSON endpoints its own llms.txt documents.
+transport:
+  protocol: MCP over HTTP, JSON-RPC 2.0
+  protocol_version: '2025-06-18'
+  content_type: application/json
+  accept: application/json, text/event-stream
+  endpoints:
+  - https://bespokenspirits.com/api/ucp/mcp
+  - https://bespokenspirits.com/api/mcp
+authentication:
+  style: anonymous read; agent-profile-bound write; OIDC for buyer accounts
+  detail: authentication/bespoken-spirits-authentication.yml
+idempotency:
+  supported: true
+  mechanism: JSON-RPC request parameter
+  parameter: meta.idempotency-key
+  scope: complete_checkout
+  required: true
+  evidence: >-
+    The complete_checkout tool's inputSchema declares meta.idempotency-key as a string
+    ("An idempotency key for completing the checkout") and lists it in meta.required
+    alongside ucp-agent. It is the only tool of the 13 that carries an idempotency key —
+    the one operation that moves money.
+  retention: not published
+  source: mcp/bespoken-spirits-ucp-mcp-tools.json
+agent_identity:
+  required: true
+  parameter: meta.ucp-agent.profile
+  format: uri
+  detail: >-
+    Every tools/call must carry a URI pointing at the calling agent's own UCP profile.
+    Omitting it returns JSON-RPC error -32001 with data.code invalid_profile_url and a
+    continue_url pointing at the storefront. tools/list and initialize are exempt.
+human_in_the_loop:
+  required_for:
+  - complete_checkout
+  rule: >-
+    Payment must never be completed without explicit, contemporaneous buyer approval.
+    Stated three times on the store's own surface — in llms.txt, in agents.md, and in
+    the robots.txt preamble, which additionally forbids scripted form fills and
+    browser-automation flows that finalize payment.
+  source: https://bespokenspirits.com/robots.txt
+buyer_context:
+  documented_parameters:
+  - context.address_country
+  - context.currency
+  purpose: accurate pricing and availability for the buyer's locale
+  source: https://bespokenspirits.com/llms.txt
+pagination:
+  documented: true
+  style: cursor
+  request_params:
+  - catalog.pagination.cursor
+  - catalog.pagination.limit
+  applies_to:
+  - search_catalog
+  note: >-
+    Cursor pagination is declared only on search_catalog. The cart, checkout and order
+    tools return whole objects and take no pagination parameters. The anonymous Shopify
+    storefront product JSON endpoints accept the platform's standard limit and page
+    query parameters, but the store does not document them.
+  source: mcp/bespoken-spirits-ucp-mcp-tools.json
+attribution:
+  documented: true
+  fields:
+  - referring_domain
+  - click_id_tag
+  - click_id_value
+  - activity_id_tag
+  - activity_id_value
+  - utm_campaign
+  - utm_source
+  - utm_medium
+  - utm_content
+  - utm_term
+  note: >-
+    Both create_cart and create_checkout accept a full attribution block, so an agent
+    that originates a purchase can pass marketing attribution through the protocol.
+signals:
+  documented: true
+  fields:
+  - dev.ucp.buyer_ip
+  - dev.ucp.user_agent
+  applies_to:
+  - search_catalog
+  note: >-
+    Namespaced buyer signals an agent may forward for pricing and availability accuracy.
+versioning:
+  scheme: dated protocol versions
+  current: '2026-04-08'
+  also_supported:
+  - '2026-01-23'
+  discovery: https://bespokenspirits.com/.well-known/ucp
+  detail: lifecycle/bespoken-spirits-lifecycle.yml
+error_envelope:
+  shape: JSON-RPC 2.0 error object
+  fields:
+  - error.code
+  - error.message
+  - error.data.code
+  - error.data.content
+  - error.data.continue_url
+  detail: errors/bespoken-spirits-problem-types.yml
+rate_limiting:
+  documented: true
+  statement: The MCP endpoint is rate-limited per IP. Back off on 429 responses.
+  headers_published: false
+  source: https://bespokenspirits.com/llms.txt
+crawling:
+  robots: https://bespokenspirits.com/robots.txt
+  posture: >-
+    Public product, collection, page, blog, policy, cart and localized HTML is
+    explicitly crawlable; checkout completion is explicitly off-limits to automation.
+x-evidence:
+  fetched: '2026-08-07'
+  probes:
+  - url: https://bespokenspirits.com/agents.md
+    http_status: 200
+  - url: https://bespokenspirits.com/robots.txt
+    http_status: 200
+  - url: https://bespokenspirits.com/api/ucp/mcp
+    http_status: 200

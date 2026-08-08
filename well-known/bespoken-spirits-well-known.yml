@@ -1,0 +1,65 @@
+generated: '2026-08-07'
+method: searched
+source: https://bespokenspirits.com/.well-known/
+host: https://bespokenspirits.com
+notes: >-
+  bespokenspirits.com is a Shopify-hosted storefront, so the /.well-known/ surface is
+  the Shopify platform's rather than a first-party developer program's. It is still
+  served from the company's own origin and is anonymously fetchable. Note that
+  /.well-known/security.txt is a 404 — the store publishes no RFC 9116 contact.
+documents:
+- path: /.well-known/ucp
+  description: Universal Commerce Protocol merchant profile — supported versions, MCP
+    service endpoint, shopping capabilities and payment handlers.
+  status: 200
+  content_type: application/json
+  file: bespoken-spirits-ucp.json
+- path: /.well-known/ucp/2026-04-08
+  description: Version-pinned UCP merchant profile for the 2026-04-08 protocol version.
+  status: 200
+  content_type: application/json
+- path: /.well-known/openid-configuration
+  description: OIDC discovery for the Shopify Customer Account authorization server
+    (issuer https://shopify.com/authentication/75681399024).
+  status: 200
+  content_type: application/json
+  file: bespoken-spirits-openid-configuration.json
+- path: /.well-known/oauth-authorization-server
+  description: RFC 8414 authorization server metadata; byte-identical to the OIDC
+    discovery document.
+  status: 200
+  content_type: application/json
+  file: bespoken-spirits-oauth-authorization-server.json
+- path: /.well-known/oauth-protected-resource
+  description: RFC 9728 protected resource metadata naming bespokenspirits.com as the
+    resource and the Shopify authentication host as its authorization server.
+  status: 200
+  content_type: application/json
+  file: bespoken-spirits-oauth-protected-resource.json
+- path: /.well-known/apple-app-site-association
+  description: Apple universal-links association file.
+  status: 200
+  content_type: application/json
+- path: /.well-known/security.txt
+  status: 404
+- path: /.well-known/api-catalog
+  status: 404
+- path: /.well-known/ai-plugin.json
+  status: 404
+- path: /.well-known/agent-card.json
+  status: 404
+- path: /.well-known/agent.json
+  status: 404
+related:
+- path: /llms.txt
+  status: 200
+  file: ../llms/bespoken-spirits-llms.txt
+- path: /agents.md
+  status: 200
+  file: ../skills/bespoken-spirits-agents.md
+- path: /sitemap_agentic_discovery.xml
+  description: A dedicated agentic-discovery sitemap whose only entry is /agents.md.
+  status: 200
+x-evidence:
+  fetched: '2026-08-07'
+  method: HTTP GET, anonymous

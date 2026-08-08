@@ -1,0 +1,67 @@
+generated: '2026-08-07'
+method: probed
+source: https://bespokenspirits.com/api/ucp/mcp
+format: jsonrpc-2.0-error
+notes: >-
+  Bespoken Spirits publishes no error reference. The entries below are the error
+  envelope and the one error class actually observed while probing the store's live
+  UCP MCP endpoint anonymously, plus the HTTP-level statuses observed on the storefront.
+  RFC 9457 problem+json is NOT in use — the machine surface is JSON-RPC, not REST.
+envelope:
+  shape: JSON-RPC 2.0 error object
+  example_fields:
+    code: integer, JSON-RPC error code
+    message: string, human-readable summary
+    data.code: string, UCP-specific machine code
+    data.content: string, detail
+    data.continue_url: string, a URL a human can continue at
+problems:
+- code: -32001
+  message: UCP discovery failed
+  data_code: invalid_profile_url
+  title: Agent profile URI missing or unfetchable
+  detail: >-
+    Returned by tools/call, prompts/list and resources/list on
+    https://bespokenspirits.com/api/ucp/mcp when the request does not carry a
+    meta.ucp-agent.profile URI the server can fetch. Observed content:
+    "Unable to fetch agent profile: Missing profile uri".
+  remediation: >-
+    Host a UCP agent profile at a public URI and pass it as params.meta.ucp-agent.profile
+    on every tools/call.
+  observed: true
+  source_probe: POST https://bespokenspirits.com/api/ucp/mcp
+- status: 429
+  title: Rate limited
+  detail: >-
+    The store's llms.txt states the MCP endpoint is rate-limited per IP and instructs
+    agents to back off on 429. Not reproduced during probing.
+  remediation: Exponential backoff.
+  observed: false
+  source_probe: https://bespokenspirits.com/llms.txt
+- status: 404
+  title: Not found
+  detail: >-
+    The storefront returns 404 for unknown paths. Note it returns a JSON 404 with a
+    zero-length body for /openapi.json and /swagger.json, and an HTML 404 page for
+    /.well-known/* misses — a distinction worth knowing before treating any 200 on this
+    host as evidence of a spec.
+  observed: true
+  source_probe: https://bespokenspirits.com/openapi.json
+- status: 406
+  title: Not acceptable
+  detail: >-
+    /account/login answers 406 with a text/plain body to a plain curl request — a bot
+    filter on the buyer-account path, not an error the API contract defines.
+  observed: true
+  source_probe: https://bespokenspirits.com/account/login
+x-evidence:
+  fetched: '2026-08-07'
+  probes:
+  - url: https://bespokenspirits.com/api/ucp/mcp
+    method: POST tools/call get_cart with empty arguments
+    http_status: 200
+    body: JSON-RPC error -32001 invalid_profile_url
+  - url: https://bespokenspirits.com/openapi.json
+    http_status: 404
+  - url: https://bespokenspirits.com/account/login
+    http_status: 406

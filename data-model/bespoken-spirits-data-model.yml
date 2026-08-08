@@ -1,0 +1,169 @@
+generated: '2026-08-07'
+method: derived
+source: mcp/bespoken-spirits-ucp-mcp-tools.json
+notes: >-
+  Derived from the JSON Schema draft 2020-12 inputSchemas returned by an anonymous
+  tools/list against https://bespokenspirits.com/api/ucp/mcp, plus the shape of the
+  anonymous storefront /products.json response. There is no OpenAPI to derive from, so
+  every entity and relationship below is grounded in a tool input schema that was
+  actually fetched. Response schemas are not published, so field lists are
+  request-side only and are not exhaustive of the underlying objects.
+entities:
+- name: Product
+  description: A catalogued spirit expression. /products.json returned 30 products by
+    default and 47 with ?limit=250 at probe time, across the Bespoken Spirits and
+    Kentucky Bourbon Trail vendor names.
+  identified_by:
+  - id
+  - handle
+  surfaced_by:
+  - search_catalog
+  - lookup_catalog
+  - get_product
+  - GET /products.json
+  - GET /products/{handle}.json
+- name: Variant
+  description: A purchasable variant of a product; resolvable by identifier through
+    lookup_catalog and get_product.
+  surfaced_by:
+  - lookup_catalog
+  - get_product
+- name: Collection
+  description: A merchandising grouping of products.
+  surfaced_by:
+  - GET /collections/{handle}/products.json
+- name: Cart
+  description: A mutable basket of line items with buyer, context, fulfillment,
+    discount and attribution blocks.
+  identified_by:
+  - id
+  surfaced_by:
+  - create_cart
+  - get_cart
+  - update_cart
+  - cancel_cart
+  fields:
+  - line_items[]
+  - buyer
+  - context
+  - fulfillment.methods[]
+  - discounts.codes[]
+  - attribution
+- name: Checkout
+  description: The purchase transaction derived from a cart. Carries everything a Cart
+    does plus a payment block of instruments, and a cart_id back-reference.
+  identified_by:
+  - id
+  surfaced_by:
+  - create_checkout
+  - get_checkout
+  - update_checkout
+  - complete_checkout
+  - cancel_checkout
+  fields:
+  - cart_id
+  - line_items[]
+  - buyer
+  - context
+  - payment.instruments[]
+  - fulfillment.methods[]
+  - discounts.codes[]
+  - attribution
+- name: LineItem
+  description: A quantity of an item within a Cart or Checkout.
+  fields:
+  - id
+  - quantity
+  - item
+- name: Buyer
+  description: Contact identity attached to a Cart or Checkout.
+  fields:
+  - email
+  - phone_number
+- name: PaymentInstrument
+  description: A payment method presented at checkout. Required fields id, handler_id
+    and type; type is card for cards and token for wallet payments.
+  fields:
+  - id
+  - handler_id
+  - type
+  - billing_address
+- name: BillingAddress
+  fields:
+  - street_address
+  - extended_address
+  - address_locality
+  - address_region
+  - postal_code
+  - address_country
+  - first_name
+- name: Order
+  description: A completed purchase, retrievable by identifier.
+  identified_by:
+  - id
+  surfaced_by:
+  - get_order
+- name: PaymentHandler
+  description: A payment handler advertised in the store's UCP profile. Three are
+    declared - com.google.pay, dev.shopify.card and dev.shopify.shop_pay.
+  surfaced_by:
+  - GET /.well-known/ucp
+relationships:
+- from: Cart
+  to: LineItem
+  kind: has_many
+  via: line_items
+- from: Checkout
+  to: LineItem
+  kind: has_many
+  via: line_items
+- from: Checkout
+  to: Cart
+  kind: belongs_to
+  via: cart_id
+- from: Checkout
+  to: PaymentInstrument
+  kind: has_many
+  via: payment.instruments
+- from: PaymentInstrument
+  to: BillingAddress
+  kind: has_one
+  via: billing_address
+- from: Cart
+  to: Buyer
+  kind: has_one
+  via: buyer
+- from: Checkout
+  to: Buyer
+  kind: has_one
+  via: buyer
+- from: LineItem
+  to: Product
+  kind: belongs_to
+  via: item
+- from: Collection
+  to: Product
+  kind: has_many
+  via: products
+- from: Order
+  to: Checkout
+  kind: belongs_to
+  via: completion of complete_checkout
+  confidence: medium
+  note: The linkage is implied by the checkout lifecycle; no response schema is
+    published that names the field.
+- from: PaymentInstrument
+  to: PaymentHandler
+  kind: belongs_to
+  via: handler_id
+x-evidence:
+  fetched: '2026-08-07'
+  probes:
+  - url: https://bespokenspirits.com/api/ucp/mcp
+    method: POST tools/list
+    http_status: 200
+  - url: https://bespokenspirits.com/products.json
+    http_status: 200
+    result: 30 products by default, 47 with ?limit=250
+  - url: https://bespokenspirits.com/.well-known/ucp
+    http_status: 200

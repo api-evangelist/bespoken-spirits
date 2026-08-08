@@ -1,0 +1,136 @@
+generated: '2026-08-07'
+method: searched
+status: published
+source: https://bespokenspirits.com/.well-known/ucp
+notes: >-
+  Two live, anonymous MCP endpoints are served from the bespokenspirits.com origin.
+  Both answer initialize and tools/list without credentials. Everything beyond
+  tools/list on the UCP endpoint (tools/call, prompts/list, resources/list) fails
+  with JSON-RPC -32001 "UCP discovery failed" until the caller supplies a UCP agent
+  profile URI, so the tool schemas below are the real published contract but calling
+  them requires an agent profile the caller hosts.
+  DIVERGENCE WORTH NOTING: the /.well-known/ucp document advertises the MCP endpoint
+  as https://kentucky-bourbontrail.myshopify.com/api/ucp/mcp (the underlying Shopify
+  myshopify.com host), while llms.txt, agents.md and robots.txt all tell agents to use
+  https://bespokenspirits.com/api/ucp/mcp. Both were probed; the branded host answers.
+servers:
+- name: universal-commerce
+  version: 0.1.0
+  transport: http
+  protocol: MCP (JSON-RPC 2.0)
+  protocol_version: '2025-06-18'
+  url: https://bespokenspirits.com/api/ucp/mcp
+  advertised_url: https://kentucky-bourbontrail.myshopify.com/api/ucp/mcp
+  auth: anonymous for initialize + tools/list; tools/call requires meta.ucp-agent.profile
+  capabilities:
+    tools:
+      listChanged: true
+    prompts:
+      listChanged: true
+    resources:
+      listChanged: true
+    logging: {}
+  tools_file: bespoken-spirits-ucp-mcp-tools.json
+  tool_count: 13
+  tools:
+  - name: search_catalog
+    category: catalog
+    description: Search for products from the online store, hosted on Shopify.
+  - name: lookup_catalog
+    category: catalog
+    description: Look up multiple products or variants by identifier.
+  - name: get_product
+    category: catalog
+    description: Retrieve complete product detail by identifier.
+  - name: create_cart
+    category: cart
+    description: Creates a new cart.
+  - name: get_cart
+    category: cart
+    description: Get the cart contents.
+  - name: update_cart
+    category: cart
+    description: Perform updates to a cart.
+  - name: cancel_cart
+    category: cart
+    description: Cancels a cart.
+  - name: create_checkout
+    category: checkout
+    description: Creates a checkout. Returns checkout details, including line items,
+      totals, discounts and taxes.
+  - name: get_checkout
+    category: checkout
+    description: Returns details about the checkout, including line items, totals,
+      discounts and taxes.
+  - name: update_checkout
+    category: checkout
+    description: Updates a checkout.
+  - name: complete_checkout
+    category: checkout
+    description: Completes a checkout and returns the checkout result. Requires
+      meta.idempotency-key and contemporaneous buyer approval of payment.
+    idempotent: true
+    idempotency_key: meta.idempotency-key
+  - name: cancel_checkout
+    category: checkout
+    description: Cancels a checkout.
+  - name: get_order
+    category: order
+    description: Get the details of an order.
+- name: storefront-renderer
+  version: 0.1.0
+  transport: http
+  protocol: MCP (JSON-RPC 2.0)
+  protocol_version: '2025-06-18'
+  url: https://bespokenspirits.com/api/mcp
+  auth: anonymous for initialize + tools/list
+  capabilities:
+    tools:
+      listChanged: true
+    prompts:
+      listChanged: true
+    resources:
+      listChanged: true
+    logging: {}
+  tools_file: bespoken-spirits-storefront-mcp-tools.json
+  tool_count: 5
+  tools:
+  - name: search_catalog
+    category: catalog
+    description: Search for products from the online store, hosted on Shopify.
+  - name: get_product_details
+    category: catalog
+    description: Look up a product by ID, optionally selecting a variant.
+  - name: get_cart
+    category: cart
+    description: Get the cart including items, shipping options, discount info and
+      checkout URL.
+  - name: update_cart
+    category: cart
+    description: Add, remove or update line items and buyer information on a cart.
+  - name: search_shop_policies_and_faqs
+    category: content
+    description: Get facts about the store's policies, products or services.
+x-evidence:
+  fetched: '2026-08-07'
+  probes:
+  - url: https://bespokenspirits.com/api/ucp/mcp
+    method: POST tools/list
+    http_status: 200
+    result: 13 tools with JSON Schema draft 2020-12 inputSchema
+  - url: https://bespokenspirits.com/api/ucp/mcp
+    method: POST initialize
+    http_status: 200
+    result: serverInfo universal-commerce 0.1.0, protocolVersion 2025-06-18
+  - url: https://bespokenspirits.com/api/mcp
+    method: POST tools/list
+    http_status: 200
+    result: 5 tools
+  - url: https://bespokenspirits.com/api/mcp
+    method: POST initialize
+    http_status: 200
+    result: serverInfo storefront-renderer 0.1.0
+  - url: https://bespokenspirits.com/api/ucp/mcp
+    method: POST prompts/list
+    http_status: 200
+    result: JSON-RPC error -32001 invalid_profile_url (agent profile required)

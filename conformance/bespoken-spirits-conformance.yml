@@ -1,0 +1,90 @@
+generated: '2026-08-07'
+method: probed
+source: https://bespokenspirits.com/.well-known/ucp
+notes: >-
+  Conformance is asserted only where a probe of the store's own origin produced the
+  evidence named. Nothing here is inferred from the fact that the store runs on Shopify.
+standards:
+- id: ucp-2026-04-08
+  name: Universal Commerce Protocol
+  conforms: true
+  version: '2026-04-08'
+  evidence: /.well-known/ucp returns 200 with a ucp.version of 2026-04-08, a
+    dev.ucp.shopping service over MCP transport, and capability declarations for
+    checkout, cart, fulfillment, discount, order, catalog.search and catalog.lookup.
+  spec: https://ucp.dev/2026-04-08/specification/overview/
+- id: mcp
+  name: Model Context Protocol
+  conforms: true
+  version: '2025-06-18'
+  evidence: initialize returns protocolVersion 2025-06-18 with tools, prompts,
+    resources and logging capabilities on both /api/ucp/mcp and /api/mcp; tools/list
+    returns 13 and 5 tools respectively.
+- id: jsonrpc-2.0
+  name: JSON-RPC 2.0
+  conforms: true
+  evidence: All MCP request and response envelopes carry jsonrpc "2.0"; errors use the
+    JSON-RPC error object with a -32001 server-defined code.
+- id: json-schema-2020-12
+  name: JSON Schema draft 2020-12
+  conforms: true
+  evidence: Every MCP tool inputSchema declares
+    $schema https://json-schema.org/draft/2020-12/schema.
+- id: oidc-discovery
+  name: OpenID Connect Discovery 1.0
+  conforms: true
+  evidence: /.well-known/openid-configuration returns 200 with issuer, token_endpoint,
+    authorization_endpoint, jwks_uri, scopes_supported and RS256 id_token signing.
+- id: rfc8414
+  name: OAuth 2.0 Authorization Server Metadata
+  conforms: true
+  evidence: /.well-known/oauth-authorization-server returns 200 with the same metadata
+    document as OIDC discovery.
+- id: rfc9728
+  name: OAuth 2.0 Protected Resource Metadata
+  conforms: true
+  evidence: /.well-known/oauth-protected-resource returns 200 declaring resource
+    https://bespokenspirits.com, its authorization server, and header bearer methods.
+- id: rfc7636
+  name: PKCE
+  conforms: true
+  evidence: code_challenge_methods_supported is ["S256"] in the discovery document.
+- id: rfc8615
+  name: Well-Known URIs
+  conforms: true
+  evidence: Six documents served under /.well-known/ on the company's own origin.
+- id: llmstxt
+  name: llms.txt
+  conforms: true
+  evidence: /llms.txt returns 200 text/markdown, and /agents.md mirrors it; a dedicated
+    /sitemap_agentic_discovery.xml lists /agents.md.
+- id: idempotency-key
+  name: Idempotency key on unsafe operations
+  conforms: partial
+  evidence: complete_checkout requires meta.idempotency-key; none of the other 12 UCP
+    tools declare one, including create_checkout, create_cart and update_cart.
+- id: rfc9116
+  name: security.txt
+  conforms: false
+  evidence: /.well-known/security.txt returns 404.
+- id: rfc9457
+  name: Problem Details for HTTP APIs
+  conforms: false
+  evidence: No application/problem+json anywhere; errors are JSON-RPC error objects.
+- id: openapi
+  name: OpenAPI
+  conforms: false
+  evidence: /openapi.json, /openapi.yaml, /swagger.json, /v1/openapi.json, /api-docs,
+    /docs and /redoc all miss on bespokenspirits.com; api., developer. and docs.
+    subdomains do not resolve. No first-party OpenAPI is published.
+- id: asyncapi
+  name: AsyncAPI
+  conforms: false
+  evidence: No event, streaming or webhook surface is published by the company.
+- id: a2a
+  name: A2A Agent Card
+  conforms: false
+  evidence: /.well-known/agent-card.json and /.well-known/agent.json both return 404.
+x-evidence:
+  fetched: '2026-08-07'
+  method: anonymous HTTP GET and JSON-RPC POST against bespokenspirits.com

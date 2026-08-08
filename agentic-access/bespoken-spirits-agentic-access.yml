@@ -1,0 +1,181 @@
+generated: '2026-08-07'
+method: generated
+source: mcp/bespoken-spirits-ucp-mcp-tools.json
+audience: null
+notes: >-
+  A recommended x-agentic-access execution contract per operation, classified from the
+  live MCP tool set rather than from an OpenAPI (Bespoken Spirits publishes none). This
+  is a governance starting point produced by API Evangelist, not a provider claim.
+  Two of the controls below are NOT recommendations but observed provider behaviour and
+  are marked source: provider — the mandatory human approval on complete_checkout, and
+  the idempotency key it requires. Both are stated on the company's own surface.
+summary:
+  operations: 18
+  by_action_class:
+    connected: 10
+    acting: 8
+  by_consequence:
+    read: 10
+    write: 7
+    physical: 1
+  human_in_the_loop_required: 1
+  audit_required: 8
+surfaces:
+- name: ucp-mcp
+  url: https://bespokenspirits.com/api/ucp/mcp
+  operations: 13
+- name: storefront-mcp
+  url: https://bespokenspirits.com/api/mcp
+  operations: 5
+operations:
+- operation: search_catalog
+  surface: ucp-mcp
+  action_class: connected
+  consequence: read
+  scope: catalog:read
+  token_ttl_seconds: 3600
+  audit: optional
+- operation: lookup_catalog
+  surface: ucp-mcp
+  action_class: connected
+  consequence: read
+  scope: catalog:read
+  token_ttl_seconds: 3600
+  audit: optional
+- operation: get_product
+  surface: ucp-mcp
+  action_class: connected
+  consequence: read
+  scope: catalog:read
+  token_ttl_seconds: 3600
+  audit: optional
+- operation: get_cart
+  surface: ucp-mcp
+  action_class: connected
+  consequence: read
+  scope: cart:read
+  token_ttl_seconds: 3600
+  audit: optional
+- operation: get_checkout
+  surface: ucp-mcp
+  action_class: connected
+  consequence: read
+  scope: checkout:read
+  token_ttl_seconds: 3600
+  audit: optional
+- operation: get_order
+  surface: ucp-mcp
+  action_class: connected
+  consequence: read
+  scope: order:read
+  token_ttl_seconds: 3600
+  audit: optional
+- operation: create_cart
+  surface: ucp-mcp
+  action_class: acting
+  consequence: write
+  scope: cart:write
+  token_ttl_seconds: 900
+  audit: required
+- operation: update_cart
+  surface: ucp-mcp
+  action_class: acting
+  consequence: write
+  scope: cart:write
+  token_ttl_seconds: 900
+  audit: required
+- operation: cancel_cart
+  surface: ucp-mcp
+  action_class: acting
+  consequence: write
+  scope: cart:write
+  token_ttl_seconds: 900
+  audit: required
+- operation: create_checkout
+  surface: ucp-mcp
+  action_class: acting
+  consequence: write
+  scope: checkout:write
+  token_ttl_seconds: 900
+  audit: required
+  note: >-
+    Recommend an idempotency key here even though the provider does not require one —
+    a blind retry creates a duplicate checkout.
+- operation: update_checkout
+  surface: ucp-mcp
+  action_class: acting
+  consequence: write
+  scope: checkout:write
+  token_ttl_seconds: 900
+  audit: required
+- operation: cancel_checkout
+  surface: ucp-mcp
+  action_class: acting
+  consequence: write
+  scope: checkout:write
+  token_ttl_seconds: 900
+  audit: required
+- operation: complete_checkout
+  surface: ucp-mcp
+  action_class: acting
+  consequence: physical
+  scope: checkout:complete
+  token_ttl_seconds: 300
+  token_exchange: required
+  purpose_required: true
+  human_in_the_loop: required
+  human_in_the_loop_source: provider
+  audit: required
+  idempotency_key: meta.idempotency-key
+  idempotency_source: provider
+  note: >-
+    Moves money and ships a regulated product (beverage alcohol). The provider itself
+    mandates contemporaneous buyer approval in llms.txt, agents.md and robots.txt, and
+    requires meta.idempotency-key on the call. Age and jurisdiction eligibility are
+    carried in context.eligibility.
+- operation: search_catalog
+  surface: storefront-mcp
+  action_class: connected
+  consequence: read
+  scope: catalog:read
+  token_ttl_seconds: 3600
+  audit: optional
+- operation: get_product_details
+  surface: storefront-mcp
+  action_class: connected
+  consequence: read
+  scope: catalog:read
+  token_ttl_seconds: 3600
+  audit: optional
+- operation: search_shop_policies_and_faqs
+  surface: storefront-mcp
+  action_class: connected
+  consequence: read
+  scope: content:read
+  token_ttl_seconds: 3600
+  audit: optional
+- operation: get_cart
+  surface: storefront-mcp
+  action_class: connected
+  consequence: read
+  scope: cart:read
+  token_ttl_seconds: 3600
+  audit: optional
+- operation: update_cart
+  surface: storefront-mcp
+  action_class: acting
+  consequence: write
+  scope: cart:write
+  token_ttl_seconds: 900
+  audit: required
+x-evidence:
+  fetched: '2026-08-07'
+  probes:
+  - url: https://bespokenspirits.com/api/ucp/mcp
+    method: POST tools/list
+    http_status: 200
+  - url: https://bespokenspirits.com/api/mcp
+    method: POST tools/list
+    http_status: 200
+  - url: https://bespokenspirits.com/robots.txt
+    http_status: 200
