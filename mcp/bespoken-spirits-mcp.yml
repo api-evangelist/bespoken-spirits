@@ -2,17 +2,14 @@ generated: '2026-08-07'
 method: searched
 status: published
 source: https://bespokenspirits.com/.well-known/ucp
-notes: >-
-  Two live, anonymous MCP endpoints are served from the bespokenspirits.com origin.
-  Both answer initialize and tools/list without credentials. Everything beyond
-  tools/list on the UCP endpoint (tools/call, prompts/list, resources/list) fails
-  with JSON-RPC -32001 "UCP discovery failed" until the caller supplies a UCP agent
-  profile URI, so the tool schemas below are the real published contract but calling
-  them requires an agent profile the caller hosts.
-  DIVERGENCE WORTH NOTING: the /.well-known/ucp document advertises the MCP endpoint
-  as https://kentucky-bourbontrail.myshopify.com/api/ucp/mcp (the underlying Shopify
-  myshopify.com host), while llms.txt, agents.md and robots.txt all tell agents to use
-  https://bespokenspirits.com/api/ucp/mcp. Both were probed; the branded host answers.
+notes: 'Two live, anonymous MCP endpoints are served from the bespokenspirits.com origin. Both answer
+  initialize and tools/list without credentials. Everything beyond tools/list on the UCP endpoint (tools/call,
+  prompts/list, resources/list) fails with JSON-RPC -32001 "UCP discovery failed" until the caller supplies
+  a UCP agent profile URI, so the tool schemas below are the real published contract but calling them
+  requires an agent profile the caller hosts. DIVERGENCE WORTH NOTING: the /.well-known/ucp document advertises
+  the MCP endpoint as https://kentucky-bourbontrail.myshopify.com/api/ucp/mcp (the underlying Shopify
+  myshopify.com host), while llms.txt, agents.md and robots.txt all tell agents to use https://bespokenspirits.com/api/ucp/mcp.
+  Both were probed; the branded host answers.'
 servers:
 - name: universal-commerce
   version: 0.1.0
@@ -56,19 +53,18 @@ servers:
     description: Cancels a cart.
   - name: create_checkout
     category: checkout
-    description: Creates a checkout. Returns checkout details, including line items,
-      totals, discounts and taxes.
+    description: Creates a checkout. Returns checkout details, including line items, totals, discounts
+      and taxes.
   - name: get_checkout
     category: checkout
-    description: Returns details about the checkout, including line items, totals,
-      discounts and taxes.
+    description: Returns details about the checkout, including line items, totals, discounts and taxes.
   - name: update_checkout
     category: checkout
     description: Updates a checkout.
   - name: complete_checkout
     category: checkout
-    description: Completes a checkout and returns the checkout result. Requires
-      meta.idempotency-key and contemporaneous buyer approval of payment.
+    description: Completes a checkout and returns the checkout result. Requires meta.idempotency-key and
+      contemporaneous buyer approval of payment.
     idempotent: true
     idempotency_key: meta.idempotency-key
   - name: cancel_checkout
@@ -103,8 +99,7 @@ servers:
     description: Look up a product by ID, optionally selecting a variant.
   - name: get_cart
     category: cart
-    description: Get the cart including items, shipping options, discount info and
-      checkout URL.
+    description: Get the cart including items, shipping options, discount info and checkout URL.
   - name: update_cart
     category: cart
     description: Add, remove or update line items and buyer information on a cart.
@@ -134,3 +129,11 @@ x-evidence:
     method: POST prompts/list
     http_status: 200
     result: JSON-RPC error -32001 invalid_profile_url (agent profile required)
+deployment:
+  mode: remote
+  endpoint: https://bespokenspirits.com/api/ucp/mcp
+  verified: probed
+  probe: live
+  tools: 13
+  checked: '2026-08-12'
+  source: catalog MCP census
