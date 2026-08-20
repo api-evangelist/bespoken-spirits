@@ -20,6 +20,17 @@ tags:
 - Company
 - Spirits
 - Beverage Alcohol
+- E-Commerce
+- Agentic Commerce
+- Universal Commerce Protocol
+- MCP
+- Shopify
+- Retail
+- Manufacturing
+tags_raw:
+- Company
+- Spirits
+- Beverage Alcohol
 - Ecommerce
 - Agentic Commerce
 - Universal Commerce Protocol
@@ -77,6 +88,10 @@ apis:
   humanURL: https://bespokenspirits.com/llms.txt
   baseURL: https://bespokenspirits.com/products.json
   tags:
+  - Catalog
+  - E-Commerce
+  - Product
+  tags_raw:
   - Catalog
   - Ecommerce
   - Products
