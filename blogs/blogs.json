@@ -2,6 +2,13 @@
   "repo": "bespoken-spirits",
   "feeds": [
     {
+      "source": "https://bespokenspirits.com/blogs/news.atom",
+      "feed_url": "https://bespokenspirits.com/blogs/news.atom",
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
       "source": "https://bespokenspirits.com/blogs/news",
       "feed_url": "https://bespokenspirits.com/blogs/news.atom",
       "title": "",
@@ -10,5 +17,5 @@
     }
   ],
   "post_count": 0,
-  "fetched": "2026-08-15T12:22:01Z"
+  "fetched": "2026-08-22T20:20:02Z"
 }
