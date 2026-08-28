@@ -9,6 +9,17 @@ description: 'Bespoken Spirits is a Lexington, Kentucky beverage-alcohol technol
   runs on Shopify and publishes an llms.txt, an agents.md, a Universal Commerce Protocol
   (UCP) discovery document at /.well-known/ucp, and two anonymous, live MCP endpoints
   that expose catalog search, cart, checkout and order tools to AI shopping agents.'
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://bespokenspirits.com/cdn/shop/files/HERO_IMAGE_0808cb9f-0b04-48f3-851a-6f6bd2307ad4.png?v=1749075439
 url: https://raw.githubusercontent.com/api-evangelist/bespoken-spirits/refs/heads/main/apis.yml
 x-type: company
