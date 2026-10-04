@@ -89,6 +89,9 @@ apis:
     url: mcp/bespoken-spirits-mcp.yml
   - type: Documentation
     url: https://bespokenspirits.com/agents.md
+  x-surface: platform-generated
+  x-platform: shopify
+  x-platform-surface: ucp
 - name: Bespoken Spirits Storefront MCP
   description: 'The Shopify storefront-renderer MCP endpoint for bespokenspirits.com.
     An anonymous tools/list returns 5 tools — search_catalog, get_cart, update_cart,
@@ -104,6 +107,9 @@ apis:
   properties:
   - type: MCPServer
     url: mcp/bespoken-spirits-mcp.yml
+  x-surface: platform-generated
+  x-platform: shopify
+  x-platform-surface: storefront-mcp
 - name: Bespoken Spirits Storefront Catalog JSON
   description: 'The public, unauthenticated Shopify storefront product JSON surface
     documented in the store''s own llms.txt and agents.md: /products.json for the
@@ -123,6 +129,9 @@ apis:
   properties:
   - type: Documentation
     url: https://bespokenspirits.com/llms.txt
+  x-surface: platform-generated
+  x-platform: shopify
+  x-platform-surface: storefront-json
 common:
 - type: Website
   url: https://bespokenspirits.com/
