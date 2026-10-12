@@ -1,0 +1,16 @@
+generated: '2026-10-12'
+method: none
+source:
+- https://zapier.com/apps/bespoken-spirits/integrations
+- https://n8n.io/integrations/bespoken-spirits/
+- https://composio.dev/toolkits/bespoken-spirits
+- https://monid.ai/tools/bespoken-spirits
+checked:
+- https://composio.dev/toolkits/bespoken-spirits
+- https://monid.ai/tools/bespoken-spirits
+- https://n8n.io/integrations/bespoken-spirits/
+- https://zapier.com/apps/bespoken-spirits/integrations
+summary: null
+marketplace_apps: []
+edges: []
+templates: []
